@@ -31,6 +31,6 @@ window.openFleischMenu = function () {
                 window.openSchlachthofMenu();
             }
         },
-        "Fleischfabrick"
+        "Fleischfabrik"
     );
 };

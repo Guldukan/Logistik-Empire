@@ -29,8 +29,8 @@ window.openStoffeMenu = function () {
         "btnSpinnerei",
         "https://game.logistics-empire.com/assets/res_yarn-D-32g-lW.avif", // Icon für Garn/Spinnerei
         () => {
-            if (window.openspinnereiMenu) {
-                window.openspinnereiMenu();
+            if (window.openSpinnereiMenu) {
+                window.openSpinnereiMenu();
             }
         },
         "Spinnerei"

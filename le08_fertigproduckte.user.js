@@ -13,10 +13,10 @@ window.openFertigprodukteMenu = function () {
         "btnPizza",
         "https://game.logistics-empire.com/assets/icon_bld_bakery-jjxzNfJk.avif",
         () => {
-            if (window.openpizaMenu) {
-                window.openpizaMenu();
+            if (window.openPizzaMenu) {
+                window.openPizzaMenu();
             } else {
-                console.log("Fehler: openpizaMenu (logemp23) nicht geladen!");
+                console.log("Fehler: openPizzaMenu (logemp23) nicht geladen!");
             }
         },
         "Pizza"

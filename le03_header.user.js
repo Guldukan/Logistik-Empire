@@ -67,7 +67,7 @@ window.initDefaultHeaderButtons = function() {
             }
         },
         {
-            id: "btnfertigproduckteHeader",
+            id: "btnFertigprodukteHeader",
             icon: "https://game.logistics-empire.com/assets/vehicle_storage_class_break_bulk_small-DHuwzeb-.avif",
             tooltip: "Fertigprodukte",
             onClick: () => {

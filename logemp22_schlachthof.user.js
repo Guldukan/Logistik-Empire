@@ -9,5 +9,5 @@
 
 window.openSchlachthofMenu = function() {
     // Nutzt die interne Suche, um nach "Schlachthof" zu filtern
-    window.applyBuildingFilter("Fleichfabrick");
+    window.applyBuildingFilter("Fleischfabrik");
 };
