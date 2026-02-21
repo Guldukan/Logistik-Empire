@@ -21,6 +21,11 @@ window.initDefaultHeaderButtons = function() {
                 if (closeBtn) {
                     closeBtn.click();
                 }
+
+                // Stoppt aktive Loops und entfernt unsere Buttons aus der Leiste
+                if (window.clearSearchDivButtons) {
+                    window.clearSearchDivButtons();
+                }
                 console.log("Suche zurückgesetzt.");
             }
         },

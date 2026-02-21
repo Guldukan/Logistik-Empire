@@ -12,6 +12,9 @@
 // Diese Funktion wird vom "Stoffe & Garne"-Button im Header aufgerufen.
 // =================================================================================
 window.openStoffeMenu = function () {
+    // Alte Buttons und Loops aufräumen
+    window.clearSearchDivButtons();
+
     // 1. Baumwollplantage (logemp31)
     window.insertButtonInSearchDiv(
         "btnBaumwolle",

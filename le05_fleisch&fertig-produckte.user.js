@@ -12,6 +12,9 @@
 // Diese Funktion wird vom "Fleisch & Vieh"-Button im Header aufgerufen.
 // =================================================================================
 window.openFleischMenu = function () {
+    // Alte Buttons und Loops aufräumen
+    window.clearSearchDivButtons();
+
     // --- Fleisch & Wurst ---
     window.insertButtonInSearchDiv(
         "btnMetzgerei",

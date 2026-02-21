@@ -8,6 +8,9 @@
 //==/UserScript==
 
 window.openKleidungMenu = function () {
+    // Alte Buttons und Loops aufräumen
+    window.clearSearchDivButtons();
+
     // 1. Kleidungsfabrik
     window.insertButtonInSearchDiv(
         "btnKleidungFactory",

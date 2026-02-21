@@ -13,6 +13,9 @@
 // Sie enthält die Buttons für die pflanzliche Lebensmittelproduktion.
 // =================================================================================
 window.openLebensmittelMenu = function () {
+    // Alte Buttons und Loops aufräumen
+    window.clearSearchDivButtons();
+
     // --- Ketchup & Tomaten ---
     window.insertButtonInSearchDiv(
         "btnGewaechshausFactory",

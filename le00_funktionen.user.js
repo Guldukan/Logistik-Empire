@@ -121,10 +121,17 @@ window.applyBuildingFilter = function(filterName) {
 // Entfernt alle Buttons aus dem Such-Div (für Untermenüs)
 // -------------------------------------------------------------
 window.clearSearchDivButtons = function() {
-    const closeBtn = document.querySelector('button[data-tutorial-id="filter_by_search"]');
-    if (!closeBtn) return;
+    // 1. Alle laufenden Loops/Observer stoppen, damit sie die Buttons nicht sofort wieder einfügen
+    if (window.activeSearchButtonLoops) {
+        window.activeSearchButtonLoops.forEach(stop => stop());
+        window.activeSearchButtonLoops = [];
+    }
 
-    const searchContainer = closeBtn.parentElement.parentElement;
+    // Anker auf das Suchfeld ändern, da der Close-Button verschwinden kann
+    const searchInput = document.querySelector('input[placeholder="Suche"]');
+    if (!searchInput) return;
+
+    const searchContainer = searchInput.parentElement.parentElement;
     if (!searchContainer) return;
 
     // Wir entfernen nur unsere eigenen Buttons (die wir eingefügt haben)
@@ -145,6 +152,13 @@ window.clearSearchDivButtons = function() {
 // -------------------------------------------------------------
 window.createHeaderButton = function(id, icon, onClick, tooltipText) {
     const topRight = document.querySelector('#headerBar .flex.flex-nowrap.items-center > div.gap-md.flex');
+    // Verbesserter Selektor: Sucht nach dem Container im Header, der die Icons enthält.
+    // Wir suchen im #headerBar nach einem div, das "gap-md" und "flex" hat.
+    let topRight = document.querySelector('#headerBar .flex.flex-nowrap.items-center > div.gap-md.flex');
+    
+    // Fallback: Falls die Klassen sich geändert haben, nehmen wir das letzte Div im Header-Wrapper
+    if (!topRight) topRight = document.querySelector('#headerBar > div > div:last-child');
+
     if (!topRight) {
         setTimeout(() => window.createHeaderButton(id, icon, onClick, tooltipText), 200);
         return;
@@ -155,6 +169,9 @@ window.createHeaderButton = function(id, icon, onClick, tooltipText) {
     const btn = document.createElement("button");
     btn.id = id;
     btn.className = "bb-base-button variant--neutral size--md shape--square content--icon theme--light";
+    
+    // ZWINGT die Buttons nebeneinander, falls der Container spinnt (Fix für Treppen-Effekt)
+    btn.style.display = "inline-flex"; 
 
     // ⭐ Tooltip: Nutze den übergebenen Text oder generiere Fallback aus ID
     btn.setAttribute("data-tooltip", tooltipText || id.replace("btn", "").replace("Header", ""));
@@ -178,6 +195,8 @@ window.createHeaderButton = function(id, icon, onClick, tooltipText) {
 
 window.sortHeaderButtons = function() {
     const topRight = document.querySelector('#headerBar .flex.flex-nowrap.items-center > div.gap-md.flex');
+    let topRight = document.querySelector('#headerBar .flex.flex-nowrap.items-center > div.gap-md.flex');
+    if (!topRight) topRight = document.querySelector('#headerBar > div > div:last-child');
     if (!topRight) return;
 
     const order = window.headerButtonOrder || [];
@@ -198,23 +217,11 @@ window.initHeaderButtons = function(buttons) {
 // -------------------------------------------------------------
 // Fügt Button in das Such-Div ein (z.B. für Produktions-Menüs)
 // -------------------------------------------------------------
+window.activeSearchButtonLoops = [];
+
 window.insertButtonInSearchDiv = function(id, icon, onClick, tooltipText) {
-    function tryInsert() {
-        // Finde den Close-Button und gehe zum äußeren Div (eine Ebene höher)
-        const closeBtn = document.querySelector('button[data-tutorial-id="filter_by_search"]');
-        if (!closeBtn) {
-            setTimeout(tryInsert, 200);
-            return;
-        }
-
-        const searchContainer = closeBtn.parentElement.parentElement; // .relative flex flex-1 items-center justify-between
-        if (!searchContainer) {
-            setTimeout(tryInsert, 200);
-            return;
-        }
-
-        if (document.querySelector("#" + id)) return;
-
+    // Helper: Button erstellen
+    const createBtn = () => {
         const btn = document.createElement("button");
         btn.id = id;
         btn.type = "button";
@@ -231,8 +238,38 @@ window.insertButtonInSearchDiv = function(id, icon, onClick, tooltipText) {
         btn.appendChild(img);
 
         if (onClick) btn.addEventListener("click", onClick);
+        return btn;
+    };
 
-        searchContainer.appendChild(btn);
+    // State für diese Instanz
+    let intervalId = null;
+
+    // Stop-Funktion registrieren (für clearSearchDivButtons)
+    const stop = () => {
+        if (intervalId) clearInterval(intervalId);
+    };
+    
+    if (!window.activeSearchButtonLoops) window.activeSearchButtonLoops = [];
+    window.activeSearchButtonLoops.push(stop);
+
+    function checkAndInsert() {
+        // Wir suchen das Suchfeld, da es stabil ist (im Gegensatz zum Close-Button)
+        const searchInput = document.querySelector('input[placeholder="Suche"]');
+        if (!searchInput) return;
+
+        // Container finden (Input -> Wrapper -> Container)
+        const searchContainer = searchInput.parentElement.parentElement;
+        if (!searchContainer) return;
+
+        // Button einfügen, falls er fehlt
+        if (!searchContainer.querySelector("#" + id)) {
+            searchContainer.appendChild(createBtn());
+        }
     }
-    tryInsert();
+
+    // Polling starten (alle 500ms prüfen)
+    intervalId = setInterval(checkAndInsert, 500);
+    
+    // Sofort einmal ausführen
+    checkAndInsert();
 };

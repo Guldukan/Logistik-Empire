@@ -8,6 +8,9 @@
 //==/UserScript==
 
 window.openFertigprodukteMenu = function () {
+    // Alte Buttons und Loops aufräumen
+    window.clearSearchDivButtons();
+
     // Pizza
     window.insertButtonInSearchDiv(
         "btnPizza",
