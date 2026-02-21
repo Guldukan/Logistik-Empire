@@ -18,7 +18,7 @@ window.openStoffeMenu = function () {
     // 1. Baumwollplantage (logemp31)
     window.insertButtonInSearchDiv(
         "btnBaumwolle",
-        "https://game.logistics-empire.com/assets/res_cotton-D32gBv5A.avif", // Icon für Baumwolle
+        "https://game.logistics-empire.com/assets/icon_bld_warehouse_dry_textile-CO0nTVe8.avif", // PLATZHALTER (Link war 404)
         () => {
             if (window.openBaumwolleMenu) {
                 window.openBaumwolleMenu();
@@ -30,7 +30,7 @@ window.openStoffeMenu = function () {
     // 2. Spinnerei (logemp32)
     window.insertButtonInSearchDiv(
         "btnSpinnerei",
-        "https://game.logistics-empire.com/assets/res_yarn-D-32g-lW.avif", // Icon für Garn/Spinnerei
+        "https://game.logistics-empire.com/assets/icon_bld_warehouse_dry_textile-CO0nTVe8.avif", // PLATZHALTER (Link war 404)
         () => {
             if (window.openSpinnereiMenu) {
                 window.openSpinnereiMenu();

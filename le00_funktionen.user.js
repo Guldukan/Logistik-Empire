@@ -151,7 +151,6 @@ window.clearSearchDivButtons = function() {
 // Header-Button Framework
 // -------------------------------------------------------------
 window.createHeaderButton = function(id, icon, onClick, tooltipText) {
-    const topRight = document.querySelector('#headerBar .flex.flex-nowrap.items-center > div.gap-md.flex');
     // Verbesserter Selektor: Sucht nach dem Container im Header, der die Icons enthält.
     // Wir suchen im #headerBar nach einem div, das "gap-md" und "flex" hat.
     let topRight = document.querySelector('#headerBar .flex.flex-nowrap.items-center > div.gap-md.flex');
@@ -194,7 +193,6 @@ window.createHeaderButton = function(id, icon, onClick, tooltipText) {
 
 
 window.sortHeaderButtons = function() {
-    const topRight = document.querySelector('#headerBar .flex.flex-nowrap.items-center > div.gap-md.flex');
     let topRight = document.querySelector('#headerBar .flex.flex-nowrap.items-center > div.gap-md.flex');
     if (!topRight) topRight = document.querySelector('#headerBar > div > div:last-child');
     if (!topRight) return;

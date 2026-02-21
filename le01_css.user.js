@@ -100,6 +100,9 @@
     document.body.appendChild(tooltipEl);
 
     document.addEventListener("mouseenter", function(e) {
+        // Sicherheitscheck: Ist das Ziel überhaupt ein Element?
+        if (!e.target || e.target.nodeType !== 1) return;
+
         const btn = e.target.closest("[data-tooltip]");
         if (!btn) return;
 
@@ -130,6 +133,9 @@
     }, true);
 
     document.addEventListener("mouseleave", function(e) {
+        // Sicherheitscheck
+        if (!e.target || e.target.nodeType !== 1) return;
+
         const btn = e.target.closest("[data-tooltip]");
         if (btn) {
             tooltipEl.classList.remove("visible");
